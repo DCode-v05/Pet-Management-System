@@ -51,7 +51,7 @@ The Pet Management System is a web-based application designed to help users effi
 ### Installation
 1. **Clone the Repository:**
    ```bash
-   git clone https://github.com/TensoRag/Pet-Management-System.git
+   git clone https://github.com/DCode-v05/Pet-Management-System.git
    cd Pet-Management-System
    ```
 2. **Install Dependencies:**
@@ -118,5 +118,5 @@ Contributions are welcome! To contribute:
 ---
 
 ## Contact
-- **GitHub:** [TensoRag](https://github.com/TensoRag)
+- **GitHub:** [DCode-v05](https://github.com/DCode-v05)
 - **Email:** denistanb05@gmail.com
