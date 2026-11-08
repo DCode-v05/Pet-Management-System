@@ -1,50 +1,118 @@
 # Pet Management System
 
-A Flask and MongoDB app for keeping pet records: user sign-up and login, a pet-adoption styled frontend ("PAW FINDERS"), and a REST API for creating, listing, updating and deleting pets.
+**A Flask + MongoDB web app for keeping pet records: owner sign-up, a "PAW FINDERS" adoption-style frontend, and a CRUD REST API behind it.**
 
-`server.py` does both jobs: it serves the static pages from `public/` and exposes the JSON API, backed by a local MongoDB (`mongodb://localhost:27017`, database `petRegistry`).
+![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white) ![Flask](https://img.shields.io/badge/Flask-000000?style=flat&logo=flask&logoColor=white) ![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=flat&logo=mongodb&logoColor=white) ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black) ![Bootstrap](https://img.shields.io/badge/Bootstrap_5-7952B3?style=flat&logo=bootstrap&logoColor=white) ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=html5&logoColor=white) ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=css3&logoColor=white)
 
-## How it works
+## Overview
 
-**Collections**
+Pet Management System is a small full-stack app for tracking pets, the kind of registry a pet owner, a vet clinic or an animal shelter might keep. A user registers and logs in, lands on an adoption-themed "PAW FINDERS" home page, then adds pets, browses them as cards, searches by Pet ID, and edits or removes records.
 
-- `user_details`: `username`, `email`, hashed `password` (werkzeug), optional `contact` and `country`, `createdAt`. Email is the unique key; registering an existing email is rejected.
-- `pets`: the fields sent by the entry form (species, breed, gender, and optional age, colour, weight, owner, contact, description, location, photo), plus `createdAt` and a generated `petId`.
+The backend is a single Flask file (`server.py`) that does two jobs: it serves the static HTML/CSS/JS frontend and exposes a JSON REST API on top of MongoDB. Passwords are hashed with werkzeug before they reach the database, and every new pet gets a readable ID built from its species, breed, gender and four random digits. I built it as a college full-stack project to practice connecting a multi-page frontend to a Flask + MongoDB backend.
 
-**API**
+## Key Features
+
+- User registration and login, with passwords hashed via `werkzeug.security` (`generate_password_hash` / `check_password_hash`). Plaintext passwords are never stored.
+- Full CRUD for pet records: create, list all, fetch one by ID, update, and delete.
+- Auto-generated Pet IDs in the form `{Species}{Breed}{Gender}{4 digits}`, e.g. a male Labrador becomes `DogLabradorM1234`.
+- Gender input is normalized: it accepts `male`/`female`/`m`/`f` (any case) and stores `M` or `F`.
+- A multi-page "PAW FINDERS" frontend: login, register, an animated home page, a pet-entry form, a pet list, and an update page.
+- The pet list shows each pet as a card and switches to a detailed single-pet layout (image, ID, age, color, weight, owner, contact, description, location) when an ID is in the URL.
+- Search box on the pet list that looks up a pet by typed Pet ID.
+- CORS enabled (Flask-CORS) so the frontend can call the API cross-origin.
+- The server tries the next port if the default one is already in use, instead of crashing.
+- Partial updates: the update endpoint only writes the fields you send and leaves the rest untouched.
+
+## How It Works
+
+The whole thing runs as one Flask process. `server.py` registers the static folder as `public/`, connects to a local MongoDB instance (`mongodb://localhost:27017`, database `petRegistry`), and serves both the pages and the API from the same origin on port 5000.
+
+### Data model
+
+Two MongoDB collections in the `petRegistry` database:
+
+- `user_details`: `username`, `email`, hashed `password`, optional `contact` and `country`, and a `createdAt` timestamp. Email is the unique key; registration rejects an email that is already registered.
+- `pets`: whatever pet fields the entry form sends (species, breed, gender, plus optional age/color/weight/owner/contact/description/location/photo), with a server-added `createdAt` and the generated `petId`.
+
+### REST API
+
+Seven JSON endpoints, returning status codes such as 201 on create, 400 on bad input, 401 on bad login, 404 on a missing pet and 500 on a server error:
 
 | Method | Route | What it does |
 |---|---|---|
-| POST | `/api/register` | Create a user |
-| POST | `/api/login` | Check email and password, return `userId` and `username` |
-| POST | `/api/pets` | Create a pet |
+| POST | `/api/register` | Create a user (validates username/email/password, hashes the password, blocks duplicate email) |
+| POST | `/api/login` | Check email and password against the stored hash, return `userId` + `username` |
+| POST | `/api/pets` | Create a pet; validates species/breed/gender, normalizes gender, generates the Pet ID |
 | GET | `/api/pets` | List all pets |
-| GET | `/api/pets/<petId>` | Fetch one pet |
-| PUT | `/api/pets/<petId>` | Update only the fields that are sent |
-| DELETE | `/api/pets/<petId>` | Delete a pet |
+| GET | `/api/pets/<petId>` | Fetch one pet by its generated Pet ID |
+| PUT | `/api/pets/<petId>` | Update a pet; only the non-null fields in the request are `$set` |
+| DELETE | `/api/pets/<petId>` | Delete a pet by Pet ID |
 
-Pet IDs are readable rather than ObjectIds: species and breed capitalised, gender reduced to `M` or `F` (it accepts `male`, `female`, `m`, `f`), then four random digits, for example `DogLabradorM1234`. Species, breed and gender are required.
+The Pet ID is generated at creation: species and breed are capitalized, gender is reduced to `M`/`F`, and four random digits are appended (`random.choices(string.digits, k=4)`). That keeps IDs unique enough for a small registry and easy to read.
 
-**Frontend**
+### Frontend page flow
 
-Plain HTML, CSS and JavaScript, no build step. The flow is login, home, entry, pet list, update. `petlist.html` with `updated-petlist.js` fetches `/api/pets`, or `/api/pets/<id>` when an `id` query parameter is present, and renders cards with a search box for a Pet ID. After login the username is kept in `localStorage`.
+The frontend is plain HTML/CSS/JS with no build step. The page flow is **login → home → entry → petlist → update**:
 
-If the port is busy, `start_server()` retries on the next one.
+- **login.html / register.html**: POST to `/api/login` and `/api/register`. After a successful login the username is saved to `localStorage` and the user is sent to `home.html`.
+- **home.html**: the "PAW FINDERS - Premium Pet Adoption & Care" landing page. It uses Owl Carousel, animate.css, Font Awesome, Bootstrap Icons, Poppins/Roboto web fonts and a custom coral / teal / yellow palette with a floating-animation header.
+- **entry.html**: the pet registration form. It POSTs the pet object to `/api/pets`, then redirects to the pet list.
+- **petlist.html + updated-petlist.js**: fetches `/api/pets` (or `/api/pets/<id>` when an `id` query param is present) and renders cards. With an ID it draws the detailed single-pet card; it also adds a search form that redirects to `petlist.html?id=<petId>`. Empty and error states show their own messages.
+- **update.html**: the edit screen, backed by the PUT endpoint.
 
-## Stack
+### Server resilience
 
-Python, Flask, Flask-CORS, pymongo, Bootstrap, Owl Carousel, animate.css, Font Awesome.
+`start_server()` wraps `app.run()` and catches `OSError` for "address already in use" (errno 98), then retries on the next port. A stale process on 5000 doesn't block a restart.
 
-## Setup
+## Highlights
 
-You need Python 3 and MongoDB running on `localhost:27017`. The repo has no `requirements.txt`, so install the dependencies directly:
+- 7 REST endpoints over MongoDB with matching HTTP status codes.
+- Readable generated Pet IDs (`DogLabradorM1234`) instead of opaque ObjectIds.
+- Password hashing on registration and login, so no plaintext credentials in the DB.
+- Automatic port increment when the default port is busy.
+- A styled frontend (PAW FINDERS) instead of bare forms: carousel, animations, custom palette.
+
+## Tech Stack
+
+- **Languages:** Python, JavaScript, HTML, CSS
+- **Backend:** Flask, Flask-CORS, `werkzeug.security` (password hashing)
+- **Database:** MongoDB via `pymongo` (database `petRegistry`)
+- **Frontend:** Bootstrap 5, vanilla JS (Fetch API), Owl Carousel, animate.css, Font Awesome, Bootstrap Icons, Google Fonts (Poppins / Roboto)
+
+## Getting Started
+
+### Prerequisites
+
+- Python 3.x
+- MongoDB running locally on `localhost:27017`
+
+### Installation
 
 ```bash
+git clone https://github.com/DCode-v05/Pet-Management-System.git
+cd Pet-Management-System
+# no requirements.txt in the repo, install the deps directly:
 pip install flask pymongo flask-cors werkzeug
+```
+
+### Running
+
+```bash
 python server.py
 ```
 
-Open http://localhost:5000 (override the port with `PORT`). Register a user, log in, and add a pet from the entry page. You can also use the API directly:
+Then open `http://localhost:5000` in your browser. The server serves `login.html` at `/` and binds to `0.0.0.0:5000` by default (override with the `PORT` env var; if the port is taken it tries the next one).
+
+Known gaps: some pages reference assets that are not in the repo (`lib/`, `img/`, `js/main.js`), and `entry.html` posts to a hardcoded `http://localhost:5000`. Passwords are hashed, but there are no sessions or tokens, so the API itself is unauthenticated.
+
+## Usage
+
+1. Open the app and **register** a user (username, email, password; contact and country are optional), then **log in**.
+2. From the home page go to the **pet entry** form and add a pet. Species, breed and gender are required. On save you get back the generated Pet ID (e.g. `CatPersianF8421`).
+3. Browse all pets on the **pet list**, or type a Pet ID into the search box to pull up a single record.
+4. Use the **update** page to edit a pet, or call `DELETE /api/pets/<petId>` to remove one.
+
+The API can also be called directly, e.g.:
 
 ```bash
 curl -X POST http://localhost:5000/api/pets \
@@ -52,13 +120,34 @@ curl -X POST http://localhost:5000/api/pets \
   -d '{"species":"dog","breed":"labrador","gender":"male"}'
 ```
 
-## Structure
+## Project Structure
 
 ```
-server.py     Flask app: API, static serving, MongoDB
-public/       HTML pages, updated-petlist.js, css/
+Pet-Management-System/
+├── public/
+│   ├── css/
+│   │   ├── bootstrap.min.css     # Bootstrap 5 build
+│   │   └── style.css             # custom styles
+│   ├── login.html                # login form -> /api/login
+│   ├── register.html             # signup form -> /api/register
+│   ├── home.html                 # PAW FINDERS landing page (carousel + animations)
+│   ├── entry.html                # add-a-pet form -> POST /api/pets
+│   ├── petlist.html              # pet cards / search / single-pet view
+│   ├── update.html               # edit a pet -> PUT /api/pets/<id>
+│   └── updated-petlist.js        # fetches + renders pet cards, search form, states
+├── server.py                     # Flask app: REST API + static serving + MongoDB
+├── .gitignore
+└── README.md
 ```
 
-## Known issues
+---
 
-Some pages reference assets that are not in the repo (`lib/`, `img/`, `js/main.js`), and `entry.html` posts to a hardcoded `http://localhost:5000`. Passwords are hashed, but there are no sessions or tokens, so the API itself is unauthenticated.
+## Contact
+
+<table>
+  <tr><td><b>Portfolio:</b> <a href="https://www.denistan.me">Denistan</a></td><td><b>LinkedIn:</b> <a href="https://www.linkedin.com/in/denistanb">denistanb</a></td></tr>
+  <tr><td><b>GitHub:</b> <a href="https://github.com/DCode-v05">DCode-v05</a></td><td><b>LeetCode:</b> <a href="https://leetcode.com/u/Denistan_B">Denistan_B</a></td></tr>
+  <tr><td colspan="2" align="center"><b>Email:</b> <a href="mailto:denistanb05@gmail.com">denistanb05@gmail.com</a></td></tr>
+</table>
+
+Made with ❤️ by **Denistan B**
