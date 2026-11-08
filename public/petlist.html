@@ -6,25 +6,19 @@
   <title>Pet Registry - List of Pets</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
-  <!-- Favicon -->
   <link href="/img/favicon.ico" rel="icon">
 
-  <!-- Google Web Fonts -->
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;900&family=Roboto:wght@400;700;900&display=swap" rel="stylesheet">
 
-  <!-- Icon Font Stylesheet -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 
-  <!-- Libraries Stylesheet -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" rel="stylesheet">
 
-  <!-- Customized Bootstrap Stylesheet -->
   <link href="/public/css/bootstrap.min.css" rel="stylesheet">
 
-  <!-- Template Stylesheet -->
   <link href="/public/css/style.css" rel="stylesheet">
 
   <style>
@@ -413,7 +407,6 @@
     <span style="--i:10">8</span>
   </div>
 
-  <!-- Navbar Start -->
   <nav class="navbar navbar-expand-lg bg-white navbar-light shadow-sm py-3 py-lg-0 px-3 px-lg-0 mb-5">
     <a href="/petlist.html" class="navbar-brand ms-lg-5">
       <h1 class="m-0 text-uppercase text-dark"><i class="bi bi-shop fs-1 text-primary me-3"></i>Paw Store</h1>
@@ -429,7 +422,6 @@
       </div>       
     </div>
   </nav>
-  <!-- Navbar End -->
 
   <div class="pr-pet-list-container">
     <div class="pr-section-header">
@@ -448,7 +440,6 @@
     </div>
   </div>
 
-  <!-- Footer Start -->
   <div class="container-fluid bg-dark text-white-50 py-4">
     <div class="container">
       <div class="row g-5">
@@ -461,16 +452,13 @@
       </div>
     </div>
   </div>
-  <!-- Footer End -->
 
-  <!-- JavaScript -->
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       const petGrid = document.getElementById('pet-grid');
       const searchParams = new URLSearchParams(window.location.search);
       const petId = searchParams.get('id');
       
-      // Function to fetch all pets or specific pet by ID
       function fetchPets() {
         const endpoint = petId ? `http://localhost:5000/api/pets/${petId}` : 'http://localhost:5000/api/pets';
         
@@ -511,7 +499,6 @@
           });
       }
       
-      // Function to display no pets message
       function displayNoPetsMessage() {
         petGrid.innerHTML = `
           <div class="pr-no-pets">
@@ -525,7 +512,6 @@
         `;
       }
       
-      // Function to display error message
       function displayErrorMessage(message) {
         petGrid.innerHTML = `
           <div class="pr-no-pets">
@@ -539,17 +525,15 @@
         `;
       }
       
-      // Function to update header when viewing a single pet
       function updateHeaderForSinglePet() {
         const sectionHeader = document.querySelector('.pr-section-header');
         if (sectionHeader) {
           sectionHeader.querySelector('h2').textContent = '🐾 Pet Details';
           sectionHeader.querySelector('p').textContent = 'Viewing details for the selected pet';
-          sectionHeader.querySelector('.pr-return-btn').style.display = 'none'; // Hide register button
+          sectionHeader.querySelector('.pr-return-btn').style.display = 'none';
         }
       }
       
-      // Function to create a pet card element
       function createPetCard(pet) {
         const card = document.createElement('div');
         card.className = 'pr-pet-card';
@@ -612,7 +596,6 @@
         return card;
       }
       
-      // Function to add search form
       function addSearchForm() {
         const sectionHeader = document.querySelector('.pr-section-header');
         if (sectionHeader && !petId) {
@@ -640,7 +623,6 @@
         }
       }
       
-      // Initialize the page
       addSearchForm();
       fetchPets();
     });

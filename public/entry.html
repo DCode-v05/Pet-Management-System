@@ -9,36 +9,28 @@
     <meta content="Free HTML Templates" name="description">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
 
-    <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;700;900&display=swap" rel="stylesheet">  
     <link href="https://fonts.googleapis.com/css2?family=Poppins&family=Roboto:wght@700&display=swap" rel="stylesheet">  
 
-    <!-- Icon Font Stylesheet -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
     <link href="lib/flaticon/font/flaticon.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
 
-    <!-- Libraries Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" rel="stylesheet">
     <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
 
-    <!-- Customized Bootstrap Stylesheet -->
     <link href="public/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Template Stylesheet -->
     <link href="public/css/style.css" rel="stylesheet">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
-<style>
-    /* [Your existing CSS remains unchanged] */
-    .brand-identifier {
+<style>    .brand-identifier {
         display: flex;
         justify-content: center;
         background: linear-gradient(90deg, #FF6B6B, #FFE66D, #4ECDC4, #6A5ACD, #FF6B6B);
@@ -95,7 +87,6 @@
             font-size: 36px;
         }
     }
-    /* Add sparkle effects */
     .brand-identifier::before {
         content: '';
         position: absolute;
@@ -124,14 +115,12 @@
         z-index: 1;
     }
     
-    /* Enhanced floating animation for letters */
     @keyframes letter-float {
         0%, 100% { transform: translateY(0) rotate(0deg); text-shadow: 0 0 10px rgba(255,255,255,0.8); }
         25% { transform: translateY(-10px) rotate(-5deg); text-shadow: 0 0 15px rgba(255,255,255,0.9), 0 0 20px var(--accent); }
         75% { transform: translateY(-5px) rotate(5deg); text-shadow: 0 0 15px rgba(255,255,255,0.9), 0 0 20px var(--primary); }
     }
     
-    /* Add colorful styles to individual letters */
     .brand-identifier span:nth-child(odd) {
         color: #fff;
         text-shadow: 0 0 10px var(--primary), 0 0 20px rgba(255,107,107,0.8);
@@ -156,7 +145,6 @@
         50% { transform: translateY(-10px); }
         100% { transform: translateY(0px); }
     }
-    /* Enhanced Top Bar */
     .topbar {
         background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
         color: white;
@@ -181,7 +169,6 @@
         transform: rotate(10deg);
     }
     
-    /* Enhanced Navbar */
     .navbar {
         background-color: white !important;
         box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
@@ -233,7 +220,6 @@
         box-shadow: 0 6px 20px rgba(255, 107, 107, 0.6);
     }
 
-    /* Enhanced Footer */
     .bg-light {
         background-color: #f8f9fa !important;
     }
@@ -291,7 +277,6 @@
     .newsletter-form button:hover {
         background: linear-gradient(90deg, var(--secondary) 0%, var(--primary) 100%);
     }
-    /* Enhanced Chatbot Button */
     .chatbot-button {
         position: fixed;
         bottom: 30px;
@@ -331,8 +316,7 @@
     }
 </style>
 
-<style>
-  .pr-gender-option {
+<style>  .pr-gender-option {
     display: inline-flex;
     align-items: center;
     padding: 10px 20px;
@@ -346,7 +330,6 @@
     margin-right: 8px;
   }
 
-  /* Default colors */
   .pr-gender-male {
     color: gray;
     border-color: gray;
@@ -357,10 +340,9 @@
     border-color: gray;
   }
 
-  /* When selected, change colors */
   input[name="gender"]:checked + i,
   input[name="gender"]:checked + span {
-    color: white; /* Text color */
+    color: white;
   }
 
   input[name="gender"]:checked + i {
@@ -371,7 +353,6 @@
     font-weight: bold;
   }
 
-  /* Change the background of the selected label */
   #gender-male input:checked ~ i,
   #gender-male input:checked ~ span {
     color: white;
@@ -394,14 +375,12 @@
     border-radius: 5px;
   }
 
-  /* Hide default radio button */
   .pr-gender-option input {
     display: none;
   }
 </style>
 
 <body>
-    <!-- Enhanced KSI-ISS032 Brand Identifier -->
     <div class="brand-identifier">
         <span style="--i:1">T</span>
         <span style="--i:2">E</span>
@@ -415,7 +394,6 @@
         <span style="--i:10">8</span>
     </div>
 
-    <!-- Navbar Start -->
     <nav class="navbar navbar-expand-lg bg-white navbar-light shadow-sm py-3 py-lg-0 px-3 px-lg-0 mb-5">
         <a href="/entry.html" class="navbar-brand ms-lg-5">
             <h1 class="m-0 text-uppercase text-dark"><i class="bi bi-shop fs-1 text-primary me-3"></i>Paw Store</h1>
@@ -431,9 +409,7 @@
             </div>       
         </div>
     </nav>
-    <!-- Navbar End -->
 
-    <!-- Pet Entry Start -->
     <div class="pr-container">
         <div class="pr-pet-entry-section">
             <i class="pr-paw-decoration pr-paw-1 fas fa-paw"></i>
@@ -469,14 +445,12 @@
                     <div class="pr-form-group">
                         <label class="pr-form-label"><i class="fas fa-venus-mars"></i> Gender</label>
                         <div class="pr-gender-options">
-                            <!-- Male Option -->
                             <label class="pr-gender-option pr-gender-male" id="gender-male">
                                 <input type="radio" name="gender" value="male" checked>
                                 <i class="fas fa-mars"></i>
                                 <span>Male</span>
                             </label>
                             
-                            <!-- Female Option -->
                             <label class="pr-gender-option pr-gender-female" id="gender-female">
                                 <input type="radio" name="gender" value="female">
                                 <i class="fas fa-venus"></i>
@@ -512,7 +486,6 @@
                             </div>
                             
                             <div class="pr-photo-preview" id="photo-preview">
-                                <!-- Photo previews will appear here -->
                             </div>
                         </div>
                     </div>
@@ -527,10 +500,7 @@
         </div>
     </div>
     
-    <!-- Isolated CSS for Pet Registry -->
-    <style>
-        /* [Pet Registry CSS remains unchanged] */
-        .pr-container {
+    <style>        .pr-container {
             --pr-primary: #8e44ad;
             --pr-secondary: #3498db;
             --pr-accent: #e74c3c;
@@ -869,7 +839,6 @@
             }
         }
         
-        /* Animation effects */
         @keyframes pr-float {
             0% { transform: translateY(0px); }
             50% { transform: translateY(-10px); }
@@ -881,31 +850,25 @@
         }
     </style>
     
-    <!-- Pet Entry JavaScript -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Get the form element
             const petForm = document.querySelector('.pr-pet-entry-form');
             
-            // Handle form submission
             petForm.addEventListener('submit', async function(e) {
                 e.preventDefault();
                 
-                // Get form data
                 const species = document.querySelector('.pr-form-select').value;
                 const breed = document.querySelector('.pr-form-control[placeholder="Enter breed"]').value;
                 const gender = document.querySelector('input[name="gender"]:checked').value;
                 const location = document.querySelector('.pr-form-control[placeholder="Enter location (city, state)"]').value;
                 const description = document.querySelector('textarea.pr-form-control').value;
                 
-                // Get photo information (just the first photo for simplicity)
                 let photoSrc = '';
                 const photoPreview = document.querySelector('#photo-preview');
                 if (photoPreview && photoPreview.querySelector('img')) {
                     photoSrc = photoPreview.querySelector('img').src;
                 }
                 
-                // Create pet object
                 const petData = {
                     species: species,
                     breed: breed,
@@ -916,7 +879,6 @@
                 };
                 
                 try {
-                    // Send data to Flask server API endpoint (updated port to 5000)
                     const response = await fetch('http://localhost:5000/api/pets', {
                         method: 'POST',
                         headers: {
@@ -932,10 +894,8 @@
                     
                     const data = await response.json();
                     
-                    // Show success message
                     window.alert('Pet registered successfully! Pet ID: ' + data.petId);
                     
-                    // Redirect to petlist.html
                     window.location.href = 'petlist.html';
                 } catch (error) {
                     console.error('Error:', error);
@@ -943,7 +903,6 @@
                 }
             });
             
-            // Handle photo upload previews
             const photoUpload = document.getElementById('photo-upload');
             const photoPreview = document.getElementById('photo-preview');
             
@@ -957,7 +916,6 @@
                 for (let i = 0; i < files.length; i++) {
                     const file = files[i];
                     
-                    // Only process image files
                     if (!file.type.match('image.*')) {
                         continue;
                     }
@@ -966,17 +924,14 @@
                     
                     reader.onload = (function(theFile) {
                         return function(e) {
-                            // Create preview element
                             const photoItem = document.createElement('div');
                             photoItem.className = 'pr-photo-item';
                             
-                            // Create image element
                             const img = document.createElement('img');
                             img.src = e.target.result;
                             img.title = theFile.name;
                             photoItem.appendChild(img);
                             
-                            // Create remove button
                             const removeBtn = document.createElement('div');
                             removeBtn.className = 'pr-remove-photo';
                             removeBtn.innerHTML = '<i class="fas fa-times"></i>';
@@ -985,37 +940,30 @@
                             });
                             photoItem.appendChild(removeBtn);
                             
-                            // Add to preview area
                             photoPreview.appendChild(photoItem);
                         };
                     })(file);
                     
-                    // Read the image file as a data URL
                     reader.readAsDataURL(file);
                 }
             }
             
-            // Handle gender option selection
             const genderOptions = document.querySelectorAll('.pr-gender-option');
             
             genderOptions.forEach(option => {
                 option.addEventListener('click', function() {
-                    // Remove selected class from all options
                     genderOptions.forEach(opt => {
                         opt.classList.remove('pr-selected');
                     });
                     
-                    // Add selected class to clicked option
                     this.classList.add('pr-selected');
                     
-                    // Check the radio button
                     this.querySelector('input').checked = true;
                 });
             });
         });
     </script>
 
-    <!-- Footer Start -->
     <div class="container-fluid bg-dark text-white-50 py-4">
         <div class="container">
             <div class="row g-5">
@@ -1028,19 +976,15 @@
             </div>
         </div>
     </div>
-    <!-- Footer End -->
 
-    <!-- Back to Top -->
     <a href="#" class="btn btn-primary py-3 fs-4 back-to-top"><i class="bi bi-arrow-up"></i></a>
 
-    <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="lib/easing/easing.min.js"></script>
     <script src="lib/waypoints/waypoints.min.js"></script>
     <script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
-    <!-- Template Javascript -->
     <script src="js/main.js"></script>
 </body>
 </html>

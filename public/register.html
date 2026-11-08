@@ -8,14 +8,11 @@
     <meta content="Pet Shop Register" name="keywords">
     <meta content="Register to Paw Finders" name="description">
 
-    <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
 
-    <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
-    <!-- Bootstrap & Icons -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
@@ -181,7 +178,7 @@
             }
 
             const formData = {
-                username: document.getElementById("name").value, // Changed to `username` to match typical Flask user schema
+                username: document.getElementById("name").value,
                 contact: document.getElementById("contact").value,
                 email: document.getElementById("email").value,
                 password: password,
@@ -199,7 +196,7 @@
 
                 if (res.ok) {
                     alert("Registration successful! Redirecting to login...");
-                    window.location.href = "login.html"; // Redirect to login page
+                    window.location.href = "login.html";
                 } else {
                     alert(data.error || "Registration failed, please try again.");
                 }

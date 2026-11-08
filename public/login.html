@@ -8,19 +8,15 @@
     <meta content="Pet Shop Login" name="keywords">
     <meta content="Login to Paw Finders" name="description">
 
-    <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
 
-    <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
-    <!-- Bootstrap & Icons -->
     <link href="/public/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
-    <style>
-        body {
+    <style>        body {
             font-family: 'Poppins', sans-serif;
             background: url('img/register-img.jpg') no-repeat center center/cover;
             display: flex;
@@ -115,7 +111,6 @@
             text-decoration: underline;
         }
 
-        /* Responsive design */
         @media (max-width: 480px) {
             .login-container {
                 padding: 20px;
@@ -141,7 +136,6 @@
     <div class="login-container">
         <div class="login-box">
             <h2>PawStore Login <i class="bi bi-paw"></i></h2>
-            <!-- Form to capture login details -->
             <form id="login-form">
                 <div class="input-group">
                     <label for="email">Email</label>
@@ -159,22 +153,19 @@
 
     <script>
         document.getElementById("login-form").addEventListener("submit", async (e) => {
-            e.preventDefault(); // Prevent default form submission
+            e.preventDefault();
         
             const formData = {
                 email: document.getElementById("email").value.trim(),
                 password: document.getElementById("password").value.trim()
             };
         
-            // Basic client-side validation
             if (!formData.email || !formData.password) {
                 alert("Please fill in all fields.");
                 return;
             }
         
             try {
-                // Update the URL to match Flask's default port (5000) instead of Node's 3000
-                // Adjust this if you changed the port in your Flask app
                 const res = await fetch("http://localhost:5000/api/login", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -187,13 +178,11 @@
                     throw new Error(data.error || "Login failed. Please check your credentials.");
                 }
         
-                // Store user info (matches Flask response structure)
                 localStorage.setItem("userId", data.userId);
                 localStorage.setItem("username", data.username);
         
-                // The Flask backend returns the same message structure as Node.js
                 alert(data.message || "Login successful!");
-                window.location.href = "home.html"; // Redirect after login
+                window.location.href = "home.html";
         
             } catch (error) {
                 console.error("Login error:", error);

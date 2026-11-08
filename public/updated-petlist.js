@@ -3,9 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const searchParams = new URLSearchParams(window.location.search);
     const petId = searchParams.get('id');
     
-    // Function to fetch all pets or specific pet by ID
     function fetchPets() {
-        // Determine API endpoint based on whether ID is provided
         const endpoint = petId ? `/api/pets/${petId}` : '/api/pets';
         
         fetch(endpoint)
@@ -16,25 +14,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 return response.json();
             })
             .then(data => {
-                // Clear loading indicator
                 petGrid.innerHTML = '';
                 
-                // Handle the response based on whether it's a single pet or array
                 const pets = Array.isArray(data) ? data : [data];
                 
                 if (pets.length === 0) {
-                    // Show message if no pets are registered
                     displayNoPetsMessage();
                     return;
                 }
                 
-                // Render each pet as a card
                 pets.forEach(pet => {
                     const petCard = createPetCard(pet);
                     petGrid.appendChild(petCard);
                 });
                 
-                // Update heading if showing specific pet
                 if (petId) {
                     updateHeaderForSinglePet();
                 }
@@ -45,7 +38,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     }
     
-    // Function to display no pets message
     function displayNoPetsMessage() {
         petGrid.innerHTML = `
             <div class="pr-no-pets">
@@ -59,7 +51,6 @@ document.addEventListener('DOMContentLoaded', function() {
         `;
     }
     
-    // Function to display error message
     function displayErrorMessage(message) {
         petGrid.innerHTML = `
             <div class="pr-no-pets">
@@ -73,7 +64,6 @@ document.addEventListener('DOMContentLoaded', function() {
         `;
     }
     
-    // Function to update header when viewing a single pet
     function updateHeaderForSinglePet() {
         const sectionHeader = document.querySelector('.pr-section-header');
         if (sectionHeader) {
@@ -82,18 +72,14 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Function to create a pet card element
     function createPetCard(pet) {
         const card = document.createElement('div');
         card.className = 'pr-pet-card';
         
-        // Default image if no photo is available
         const photoSrc = pet.photo || 'https://via.placeholder.com/300x200?text=No+Photo';
         
-        // Format the pet description
         const description = pet.description || 'No description available';
         
-        // Create more detailed card when viewing a single pet
         if (petId) {
             card.className = 'pr-pet-card pr-pet-single';
             card.innerHTML = `
@@ -160,7 +146,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
             `;
         } else {
-            // Standard card for the pet list view
             card.innerHTML = `
                 <img src="${photoSrc}" alt="${pet.species} - ${pet.breed}" class="pr-pet-image">
                 <div class="pr-pet-details">
@@ -183,7 +168,6 @@ document.addEventListener('DOMContentLoaded', function() {
         return card;
     }
     
-    // Add the search form to the page
     function addSearchForm() {
         const sectionHeader = document.querySelector('.pr-section-header');
         if (sectionHeader && !petId) {
@@ -201,7 +185,6 @@ document.addEventListener('DOMContentLoaded', function() {
             `;
             sectionHeader.appendChild(searchForm);
             
-            // Add event listener to the form
             document.getElementById('pet-search-form').addEventListener('submit', function(e) {
                 e.preventDefault();
                 const searchId = document.getElementById('pet-id-input').value.trim();
@@ -212,7 +195,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Initialize the page
     addSearchForm();
     fetchPets();
 });
